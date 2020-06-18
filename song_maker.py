@@ -39,33 +39,11 @@ print(assests)
 # we don't need the .content.manifest any more
 core = core.replace(".content.manifest","")
 
-# we begin the making the translation file with the standart 
-Translation_songs = open(os.path.join(pathtoFile,'English ' + core +'.translation'),"w",newline='\n')
-Translation_songs.write('"Metadata"\n')
-Translation_songs.write('{\n')
-Translation_songs.write('	"Language" "english"\n')
-Translation_songs.write('	"Namespace" "SDG"\n')
-Translation_songs.write('}\n')
-Translation_songs.write('"Translation"\n')
-Translation_songs.write('{\n')
-Translation_songs.write('	"Stereo_Songs"\n')
-Translation_songs.write('	{\n')
-Translation_songs.write('		"'+'Unturned_Theme'+'"\n')
-Translation_songs.write('		{\n')
-Translation_songs.write('			"Title"\n')
-Translation_songs.write('			{\n')
-Translation_songs.write('				"Text" "'+'Unturned Theme' + '"\n')
-Translation_songs.write('				"Version" "1"\n')
-Translation_songs.write('			}\n')
-Translation_songs.write('		}\n')
-
-
-
 for asset in assests:
     filename = os.path.basename( ( os.path.splitext(asset)[0] ))
-    if not os.path.exists(os.path.join(pathtoFile, core + ' assest songs')):
-        os.makedirs(os.path.join(pathtoFile, core + ' assest songs'))
-    filedescriptor = open(os.path.join(pathtoFile, core + ' assest songs/', filename +'.asset'),"w")
+    if not os.path.exists(os.path.join(pathtoFile, filename)):
+        os.makedirs(os.path.join(pathtoFile, filename))
+    filedescriptor = open(os.path.join(pathtoFile, filename, filename +'.asset'),"w")
     filedescriptor.write('"Metadata"\n')
     filedescriptor.write('{\n')
     filedescriptor.write('	"GUID" "' + uuid.uuid4().hex + '"\n')
@@ -87,18 +65,11 @@ for asset in assests:
     filedescriptor.write('}')
     filedescriptor.close
 
-    Translation_songs.write('		"'+filename+'"\n')
-    Translation_songs.write('		{\n')
-    Translation_songs.write('			"Title"\n')
-    Translation_songs.write('			{\n')
-    Translation_songs.write('				"Text" "'+ filename.replace("_"," ") +'"\n')
-    Translation_songs.write('				"Version" "1"\n')
-    Translation_songs.write('			}\n')
-    Translation_songs.write('		}\n')
+    nameapplier = open(os.path.join(pathtoFile, filename, 'English.dat'),"w")
+    nameapplier.write('Name'' '+filename.replace("_"," "))
+    nameapplier.close
+
     print(filename.replace("_"," "))
 
-Translation_songs.write('	}\n')
-Translation_songs.write('}\n')
 
 print('done')
-Translation_songs.close
