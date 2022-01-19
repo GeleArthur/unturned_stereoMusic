@@ -37,9 +37,10 @@ with open(os.path.join(pathtoFile,core) ,'r') as file:
 print(assests)
 
 # we don't need the .content.manifest any more
-core = core.replace(".content.manifest","")
+core = core.replace(".manifest","")
 
 for asset in assests:
+    asset = asset.replace("Assets/", "")
     filename = os.path.basename( ( os.path.splitext(asset)[0] ))
     if not os.path.exists(os.path.join(pathtoFile, filename)):
         os.makedirs(os.path.join(pathtoFile, filename))
@@ -52,22 +53,14 @@ for asset in assests:
     filedescriptor.write('"Asset"\n')
     filedescriptor.write('{\n')
     filedescriptor.write('	"ID" "0"\n')
-    filedescriptor.write('	"Title"\n')
-    filedescriptor.write('	{\n')
-    filedescriptor.write('		"Namespace" "SDG"\n')
-    filedescriptor.write('		"Token" "Stereo_Songs.' + filename + '.Title"\n')
-    filedescriptor.write('	}\n')
+    filedescriptor.write('	"Title" "' + filename + '"\n')
     filedescriptor.write('	"Song"\n')
     filedescriptor.write('	{\n')
-    filedescriptor.write('		"Name" "' + core + '.content"\n')
+    filedescriptor.write('		"Name" "' + core + '"\n')
     filedescriptor.write('		"Path" "' + asset + '"\n')
     filedescriptor.write('	}\n')
     filedescriptor.write('}')
     filedescriptor.close
-
-    nameapplier = open(os.path.join(pathtoFile, filename, 'English.dat'),"w")
-    nameapplier.write('Name'' '+filename.replace("_"," "))
-    nameapplier.close
 
     print(filename.replace("_"," "))
 
